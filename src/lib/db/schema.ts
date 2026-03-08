@@ -1,15 +1,15 @@
-import { pgTable, text, integer, timestamp, boolean, jsonb, index, serial, decimal } from 'drizzle-orm/pg-core';
+import { pgTable, text, integer, bigint, timestamp, boolean, jsonb, index, serial, decimal } from 'drizzle-orm/pg-core';
 
 export const submissions = pgTable('submissions', {
   id: serial('id').primaryKey(),
   username: text('username').notNull(), // Keep for backwards compatibility, will be email
   email: text('email').notNull(),
-  totalTokens: integer('total_tokens').notNull(),
+  totalTokens: bigint('total_tokens', { mode: 'number' }).notNull(),
   totalCost: decimal('total_cost', { precision: 10, scale: 4 }).notNull(),
-  inputTokens: integer('input_tokens').notNull(),
-  outputTokens: integer('output_tokens').notNull(),
-  cacheCreationTokens: integer('cache_creation_tokens').notNull(),
-  cacheReadTokens: integer('cache_read_tokens').notNull(),
+  inputTokens: bigint('input_tokens', { mode: 'number' }).notNull(),
+  outputTokens: bigint('output_tokens', { mode: 'number' }).notNull(),
+  cacheCreationTokens: bigint('cache_creation_tokens', { mode: 'number' }).notNull(),
+  cacheReadTokens: bigint('cache_read_tokens', { mode: 'number' }).notNull(),
   dateRange: jsonb('date_range').$type<{
     start: string;
     end: string;
